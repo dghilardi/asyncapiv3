@@ -6,6 +6,8 @@ use crate::spec::info::Info;
 use crate::spec::operation::{Operation, Operations};
 use crate::spec::server::{Server, Servers};
 
+pub mod operation;
+
 pub struct AsyncApiV3Builder {
     spec: AsyncApiV3Spec,
 }
