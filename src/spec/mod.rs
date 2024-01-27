@@ -10,6 +10,7 @@ pub mod info;
 pub mod operation;
 pub mod server;
 mod common;
+pub mod message;
 
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(tag = "asyncapi")]
