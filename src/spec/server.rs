@@ -32,7 +32,7 @@ pub struct Server {
     ///	Additional external documentation for this server.
     pub external_docs: Option<RefOr<ExternalDocumentation>>,
     ///	A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the server.
-    pub bindings: Option<RefOr<ServerBinding>>,
+    pub bindings: Option<RefOr<ServerBindings>>,
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -52,6 +52,6 @@ pub struct Variable {
 
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct ServerBinding {
+pub struct ServerBindings {
     //TODO: implement server-binding object https://www.asyncapi.com/docs/reference/specification/v3.0.0#serverBindingsObject
 }
