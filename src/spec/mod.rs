@@ -9,7 +9,7 @@ pub mod component;
 pub mod info;
 pub mod operation;
 pub mod server;
-mod common;
+pub mod common;
 pub mod message;
 pub mod security;
 
