@@ -24,6 +24,7 @@ pub enum AsyncApiSpec {
 #[serde(rename_all = "camelCase")]
 pub struct AsyncApiV3Spec {
     /// Identifier of the application the AsyncAPI document is defining.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub id: Option<String>,
     /// Provides metadata about the API. The metadata can be used by the clients if needed.
     pub info: Info,
@@ -31,6 +32,7 @@ pub struct AsyncApiV3Spec {
     #[serde(default)]
     pub servers: Servers,
     /// Default content type to use when encoding/decoding a message's payload.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub default_content_type: Option<String>,
     /// The channels used by this application.
     #[serde(default)]

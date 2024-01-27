@@ -8,27 +8,37 @@ pub type Messages = HashMap<String, RefOr<Message>>;
 /// Describes a message received on a given channel and operation.
 pub struct Message {
     /// Schema definition of the application headers. Schema MUST be a map of key-value pairs. It MUST NOT define the protocol headers. If this is a Schema Object, then the schemaFormat will be assumed to be "application/vnd.aai.asyncapi+json;version=asyncapi" where the version is equal to the AsyncAPI Version String.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub headers: Option<RefOr<Either<schemars::schema::Schema, MultiFormatSchema>>>,
     /// Definition of the message payload. If this is a Schema Object, then the schemaFormat will be assumed to be "application/vnd.aai.asyncapi+json;version=asyncapi" where the version is equal to the AsyncAPI Version String.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub payload: Option<RefOr<Either<schemars::schema::Schema, MultiFormatSchema>>>,
     /// Definition of the correlation ID used for message tracing or matching.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub correlation_id: Option<RefOr<CorrelationId>>,
     /// The content type to use when encoding/decoding a message's payload. The value MUST be a specific media type (e.g. application/json). When omitted, the value MUST be the one specified on the defaultContentType field.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub content_type: Option<String>,
     /// A machine-friendly name for the message.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
     /// A human-friendly title for the message.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub title: Option<String>,
     /// A short summary of what the message is about.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub summary: Option<String>,
     /// A verbose explanation of the message. CommonMark syntax can be used for rich text representation.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
     /// A list of tags for logical grouping and categorization of messages.
     #[serde(default)]
     pub tags: Vec<Tag>,
     /// Additional external documentation for this message.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub external_docs: Option<RefOr<ExternalDocumentation>>,
     /// A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the message.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub bindings: Option<RefOr<MessageBindings>>,
     /// List of examples.
     #[serde(default)]
@@ -38,7 +48,7 @@ pub struct Message {
     pub traits: Vec<RefOr<MessageTrait>>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, PartialEq, Debug)]
 #[serde(rename_all = "camelCase")]
 /// The Multi Format Schema Object represents a schema definition. It differs from the Schema Object in that it supports multiple schema formats or languages (e.g., JSON Schema, Avro, etc.).
 pub struct MultiFormatSchema {
@@ -54,6 +64,7 @@ pub struct MultiFormatSchema {
 #[serde(rename_all = "camelCase")]
 pub struct CorrelationId {
     /// An optional description of the identifier. CommonMark syntax can be used for rich text representation.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
     /// A runtime expression that specifies the location of the correlation ID.
     pub location: String,
@@ -74,8 +85,10 @@ pub struct MessageExample {
     /// The value of this field MUST validate against the Message Object's payload field.
     pub payload: HashMap<String, serde_json::Value>,
     /// A machine-friendly name.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
     /// A short summary of what the example is about.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub summary: Option<String>,
 }
 
@@ -85,25 +98,34 @@ pub struct MessageExample {
 /// If you're looking to apply traits to an operation, see the Operation Trait Object.
 pub struct MessageTrait {
     /// Schema definition of the application headers. Schema MUST be a map of key-value pairs. It MUST NOT define the protocol headers. If this is a Schema Object, then the schemaFormat will be assumed to be "application/vnd.aai.asyncapi+json;version=asyncapi" where the version is equal to the AsyncAPI Version String.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub headers: Option<RefOr<Either<schemars::schema::Schema, MultiFormatSchema>>>,
     /// Definition of the correlation ID used for message tracing or matching.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub correlation_id: Option<RefOr<CorrelationId>>,
     /// The content type to use when encoding/decoding a message's payload. The value MUST be a specific media type (e.g. application/json). When omitted, the value MUST be the one specified on the defaultContentType field.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub content_type: Option<String>,
     /// A machine-friendly name for the message.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
     /// A human-friendly title for the message.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub title: Option<String>,
     /// A short summary of what the message is about.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub summary: Option<String>,
     /// A verbose explanation of the message. CommonMark syntax can be used for rich text representation.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
     /// A list of tags for logical grouping and categorization of messages.
     #[serde(default)]
     pub tags: Vec<Tag>,
     /// Additional external documentation for this message.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub external_docs: Option<RefOr<ExternalDocumentation>>,
     /// A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the message.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub bindings: Option<RefOr<MessageBindings>>,
     /// List of examples.
     #[serde(default)]
