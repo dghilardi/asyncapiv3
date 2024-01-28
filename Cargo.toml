@@ -19,5 +19,8 @@ serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 thiserror = { version = "1.0", optional = true }
 
+[dev-dependencies]
+serde_yaml = "0.9"
+
 [features]
 builder_unstable = ["log", "thiserror"]

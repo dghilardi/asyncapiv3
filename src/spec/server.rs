@@ -12,34 +12,34 @@ pub struct Server {
     ///	The protocol this server supports for connection.
     pub protocol: String,
     ///	The version of the protocol used for connection. For instance: AMQP 0.9.1, HTTP 2.0, Kafka 1.0.0, etc.
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub protocol_version: Option<String>,
     ///	The path to a resource in the host. This field supports Server Variables. Variable substitutions will be made when a variable is named in {braces}.
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub pathname: Option<String>,
     ///	An optional string describing the server. CommonMark syntax MAY be used for rich text representation.
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
     ///	A human-friendly title for the server.
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub title: Option<String>,
     ///	A short summary of the server.
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub summary: Option<String>,
     ///	A map between a variable name and its value. The value is used for substitution in the server's host and pathname template.
     #[serde(default)]
     pub variables: HashMap<String, RefOr<Variable>>,
     ///	A declaration of which security schemes can be used with this server. The list of values includes alternative security scheme objects that can be used. Only one of the security scheme objects need to be satisfied to authorize a connection or operation.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub security: Option<RefOr<SecurityScheme>>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub security: Vec<RefOr<SecurityScheme>>,
     ///	Tags Object	A list of tags for logical grouping and categorization of servers.
     #[serde(default)]
     pub tags: Vec<Tag>,
     ///	Additional external documentation for this server.
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub external_docs: Option<RefOr<ExternalDocumentation>>,
     ///	A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the server.
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub bindings: Option<RefOr<ServerBindings>>,
 }
 
@@ -48,13 +48,13 @@ pub struct Server {
 pub struct Variable {
     /// An enumeration of string values to be used if the substitution options are from a limited set.
     #[serde(rename = "enum")]
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub enum_values: Option<Vec<String>>,
     /// The default value to use for substitution, and to send, if an alternate value is not supplied.
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub default: Option<String>,
     /// An optional description for the server variable. CommonMark syntax MAY be used for rich text representation.
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
     /// An array of examples of the server variable.
     #[serde(default)]

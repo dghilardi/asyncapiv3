@@ -72,7 +72,7 @@ impl AsyncApiV3Builder {
             title: None,
             summary: None,
             description: None,
-            security: None,
+            security: vec![],
             tags: vec![],
             external_docs: None,
             bindings: None,
