@@ -9,10 +9,10 @@ pub type Messages = HashMap<String, RefOr<Message>>;
 pub struct Message {
     /// Schema definition of the application headers. Schema MUST be a map of key-value pairs. It MUST NOT define the protocol headers. If this is a Schema Object, then the schemaFormat will be assumed to be "application/vnd.aai.asyncapi+json;version=asyncapi" where the version is equal to the AsyncAPI Version String.
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub headers: Option<RefOr<Either<schemars::schema::Schema, MultiFormatSchema>>>,
+    pub headers: Option<RefOr<Either<schemars::Schema, MultiFormatSchema>>>,
     /// Definition of the message payload. If this is a Schema Object, then the schemaFormat will be assumed to be "application/vnd.aai.asyncapi+json;version=asyncapi" where the version is equal to the AsyncAPI Version String.
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub payload: Option<RefOr<Either<schemars::schema::Schema, MultiFormatSchema>>>,
+    pub payload: Option<RefOr<Either<schemars::Schema, MultiFormatSchema>>>,
     /// Definition of the correlation ID used for message tracing or matching.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub correlation_id: Option<RefOr<CorrelationId>>,
@@ -101,7 +101,7 @@ pub struct MessageExample {
 pub struct MessageTrait {
     /// Schema definition of the application headers. Schema MUST be a map of key-value pairs. It MUST NOT define the protocol headers. If this is a Schema Object, then the schemaFormat will be assumed to be "application/vnd.aai.asyncapi+json;version=asyncapi" where the version is equal to the AsyncAPI Version String.
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub headers: Option<RefOr<Either<schemars::schema::Schema, MultiFormatSchema>>>,
+    pub headers: Option<RefOr<Either<schemars::Schema, MultiFormatSchema>>>,
     /// Definition of the correlation ID used for message tracing or matching.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub correlation_id: Option<RefOr<CorrelationId>>,
