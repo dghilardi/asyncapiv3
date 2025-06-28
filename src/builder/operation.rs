@@ -1,10 +1,10 @@
 use std::collections::HashMap;
 
-use schemars::schema::Schema;
+use schemars::Schema;
 
 use crate::error::Error;
 use crate::spec::channel::Channel;
-use crate::spec::common::{Either, ReferenceObject, RefOr};
+use crate::spec::common::{Either, RefOr, ReferenceObject};
 use crate::spec::message::Message;
 use crate::spec::operation::{Operation, OperationAction, OperationReply, OperationReplyAddress};
 
@@ -25,77 +25,110 @@ pub struct ReplyInfo {
     pub reply_address_location: String,
 }
 impl AsyncApiV3Builder {
-    pub fn register_simple_req_rep_operation(&mut self, operation: OperationInfo, reply_info: ReplyInfo, req: MessageFullSpec, res: MessageFullSpec) -> Result<(), Error> {
+    pub fn register_simple_req_rep_operation(
+        &mut self,
+        operation: OperationInfo,
+        reply_info: ReplyInfo,
+        req: MessageFullSpec,
+        res: MessageFullSpec,
+    ) -> Result<(), Error> {
         if self.spec.operations.contains_key(&operation.name) {
-            return Err(Error::DuplicateOperation { name: String::from(&operation.name) });
+            return Err(Error::DuplicateOperation {
+                name: String::from(&operation.name),
+            });
         }
 
         self.merge_schema_components(req.definitions)?;
         self.merge_schema_components(res.definitions)?;
 
-        let req_name = if let Some(RefOr::Right(Either::Left(Schema::Object(ref schema)))) = req.message.payload {
-            schema.metadata.as_ref()
-                .and_then(|meta| meta.title.as_ref())
-                .map(String::from)
+        let req_name = if let Some(RefOr::Right(Either::Left(ref schema))) = req.message.payload {
+            schema
+                .as_object()
+                .and_then(|x| x.get("title"))
+                .map(ToString::to_string)
         } else {
             None
-        }.unwrap_or_else(|| format!("{}.req", operation.name));
+        }
+        .unwrap_or_else(|| format!("{}.req", operation.name));
 
-        let res_name = if let Some(RefOr::Right(Either::Left(Schema::Object(ref schema)))) = res.message.payload {
-            schema.metadata.as_ref()
-                .and_then(|meta| meta.title.as_ref())
-                .map(String::from)
+        let res_name = if let Some(RefOr::Right(Either::Left(ref schema))) = res.message.payload {
+            schema
+                .as_object()
+                .and_then(|x| x.get("title"))
+                .map(ToString::to_string)
         } else {
             None
-        }.unwrap_or_else(|| format!("{}.res", operation.name));
+        }
+        .unwrap_or_else(|| format!("{}.res", operation.name));
 
-        self.spec.channels.insert(String::from(&operation.name), RefOr::Right(Channel {
-            address: Some(String::from(&operation.address)),
-            messages: [(String::from(&req_name), RefOr::Right(req.message))]
-                .into_iter()
-                .collect(),
-            title: None,
-            summary: None,
-            description: None,
-            servers: vec![],
-            parameters: Default::default(),
-            tags: vec![],
-            external_docs: None,
-            bindings: None,
-        }));
+        self.spec.channels.insert(
+            String::from(&operation.name),
+            RefOr::Right(Channel {
+                address: Some(String::from(&operation.address)),
+                messages: [(String::from(&req_name), RefOr::Right(req.message))]
+                    .into_iter()
+                    .collect(),
+                title: None,
+                summary: None,
+                description: None,
+                servers: vec![],
+                parameters: Default::default(),
+                tags: vec![],
+                external_docs: None,
+                bindings: None,
+            }),
+        );
 
         self.register_response(&reply_info.channel_name, &res_name, res.message)?;
 
-        self.spec.operations.insert(String::from(&operation.name), RefOr::Right(Operation {
-            action: OperationAction::Send,
-            channel: ReferenceObject::new_channel(&operation.name),
-            title: None,
-            summary: None,
-            description: None,
-            security: vec![],
-            tags: vec![],
-            external_docs: None,
-            bindings: None,
-            traits: vec![],
-            messages: Some(vec![ReferenceObject::new_channel_message(&operation.name, &req_name)]),
-            reply: Some(RefOr::Right(OperationReply {
-                channel: Some(ReferenceObject::new_channel(&reply_info.channel_name)),
-                address: Some(RefOr::Right(OperationReplyAddress {
-                    description: None,
-                    location: reply_info.reply_address_location,
+        self.spec.operations.insert(
+            String::from(&operation.name),
+            RefOr::Right(Operation {
+                action: OperationAction::Send,
+                channel: ReferenceObject::new_channel(&operation.name),
+                title: None,
+                summary: None,
+                description: None,
+                security: vec![],
+                tags: vec![],
+                external_docs: None,
+                bindings: None,
+                traits: vec![],
+                messages: Some(vec![ReferenceObject::new_channel_message(
+                    &operation.name,
+                    &req_name,
+                )]),
+                reply: Some(RefOr::Right(OperationReply {
+                    channel: Some(ReferenceObject::new_channel(&reply_info.channel_name)),
+                    address: Some(RefOr::Right(OperationReplyAddress {
+                        description: None,
+                        location: reply_info.reply_address_location,
+                    })),
+                    messages: vec![ReferenceObject::new_channel_message(
+                        &reply_info.channel_name,
+                        &res_name,
+                    )],
                 })),
-                messages: vec![ReferenceObject::new_channel_message(&reply_info.channel_name, &res_name)],
-            })),
-        }));
+            }),
+        );
 
         Ok(())
     }
 
-    fn register_response(&mut self, reply_channel_name: &str, res_name: &str, message: Message) -> Result<(), Error> {
+    fn register_response(
+        &mut self,
+        reply_channel_name: &str,
+        res_name: &str,
+        message: Message,
+    ) -> Result<(), Error> {
         let Some(RefOr::Right(channel)) = self.spec.channels.get_mut(reply_channel_name) else {
-            return Err(Error::ChannelNotFound { name: String::from(reply_channel_name) });
+            return Err(Error::ChannelNotFound {
+                name: String::from(reply_channel_name),
+            });
         };
-        channel.messages.insert(String::from(res_name), RefOr::Right(message));
+        channel
+            .messages
+            .insert(String::from(res_name), RefOr::Right(message));
         Ok(())
     }
     fn merge_schema_components(&mut self, partial: HashMap<String, Schema>) -> Result<(), Error> {
@@ -121,9 +154,9 @@ impl AsyncApiV3Builder {
 
 #[cfg(test)]
 mod test {
-    use schemars::JsonSchema;
-    use crate::spec::info::Info;
     use super::*;
+    use crate::spec::info::Info;
+    use schemars::JsonSchema;
 
     #[derive(JsonSchema)]
     struct CommonData {
@@ -154,14 +187,15 @@ mod test {
             external_docs: None,
         });
 
-        let mut settings = schemars::gen::SchemaSettings::default();
-        settings.definitions_path = String::from("#/components/schemas/");
+        let mut settings = schemars::generate::SchemaSettings::default();
+        settings.definitions_path = "#/components/schemas/".into();
 
-        let req_schema = schemars::gen::SchemaGenerator::new(settings.clone()).into_root_schema_for::<Req>();
+        let mut req_schema_gen = schemars::generate::SchemaGenerator::new(settings.clone());
+        let req_schema = req_schema_gen.clone().into_root_schema_for::<Req>();
         let req_message = MessageFullSpec {
             message: Message {
                 headers: None,
-                payload: Some(RefOr::Right(Either::Left(Schema::Object(req_schema.schema)))),
+                payload: Some(RefOr::Right(Either::Left(req_schema))),
                 correlation_id: None,
                 content_type: None,
                 name: None,
@@ -174,15 +208,19 @@ mod test {
                 examples: vec![],
                 traits: vec![],
             },
-            definitions: req_schema.definitions.into_iter().collect(),
+            definitions: req_schema_gen
+                .take_definitions(false)
+                .iter()
+                .map(|(k, v)| (k.clone(), Schema::try_from(v.clone()).unwrap()))
+                .collect(),
         };
 
-
-        let res_schema = schemars::gen::SchemaGenerator::new(settings).into_root_schema_for::<Res>();
+        let mut res_schema_gen = schemars::generate::SchemaGenerator::new(settings);
+        let res_schema = res_schema_gen.clone().into_root_schema_for::<Res>();
         let res_message = MessageFullSpec {
             message: Message {
                 headers: None,
-                payload: Some(RefOr::Right(Either::Left(Schema::Object(res_schema.schema)))),
+                payload: Some(RefOr::Right(Either::Left(res_schema))),
                 correlation_id: None,
                 content_type: None,
                 name: None,
@@ -195,27 +233,41 @@ mod test {
                 examples: vec![],
                 traits: vec![],
             },
-            definitions: res_schema.definitions.into_iter().collect(),
+            definitions: res_schema_gen
+                .take_definitions(false)
+                .iter()
+                .map(|(k, v)| (k.clone(), Schema::try_from(v.clone()).unwrap()))
+                .collect(),
         };
 
-        spec.register_channel("DemoRepl", Channel {
-            address: None,
-            messages: Default::default(),
-            title: None,
-            summary: None,
-            description: None,
-            servers: vec![],
-            parameters: Default::default(),
-            tags: vec![],
-            external_docs: None,
-            bindings: None,
-        });
+        spec.register_channel(
+            "DemoRepl",
+            Channel {
+                address: None,
+                messages: Default::default(),
+                title: None,
+                summary: None,
+                description: None,
+                servers: vec![],
+                parameters: Default::default(),
+                tags: vec![],
+                external_docs: None,
+                bindings: None,
+            },
+        );
         spec.register_simple_req_rep_operation(
-            OperationInfo { name: String::from("DemoOp"), address: String::from("demo.operation") },
-            ReplyInfo { channel_name: String::from("DemoRepl"), reply_address_location: String::from("$message.payload#/reply") },
+            OperationInfo {
+                name: String::from("DemoOp"),
+                address: String::from("demo.operation"),
+            },
+            ReplyInfo {
+                channel_name: String::from("DemoRepl"),
+                reply_address_location: String::from("$message.payload#/reply"),
+            },
             req_message,
             res_message,
-        ).unwrap();
+        )
+        .unwrap();
 
         println!("{}", serde_json::to_string(&spec.build()).unwrap())
     }

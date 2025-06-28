@@ -12,7 +12,7 @@ use crate::spec::server::{Server, ServerBindings, Variable};
 pub struct Components {
     /// An object to hold reusable Schema Object. If this is a Schema Object, then the schemaFormat will be assumed to be "application/vnd.aai.asyncapi+json;version=asyncapi" where the version is equal to the AsyncAPI Version String.
     #[serde(default, skip_serializing_if = "HashMap::is_empty")]
-    pub schemas: HashMap<String, RefOr<Either<schemars::schema::Schema, MultiFormatSchema>>>,
+    pub schemas: HashMap<String, RefOr<Either<schemars::Schema, MultiFormatSchema>>>,
     /// An object to hold reusable [Server Objects](Server).
     #[serde(default, skip_serializing_if = "HashMap::is_empty")]
     pub servers: HashMap<String, RefOr<Server>>,
