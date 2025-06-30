@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use crate::spec::common::{Either, ExternalDocumentation, RefOr, Tag};
+use std::collections::HashMap;
 
 pub type Messages = HashMap<String, RefOr<Message>>;
 
@@ -73,7 +73,7 @@ pub struct CorrelationId {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct MessageBindings {
- // TODO: implement based on https://www.asyncapi.com/docs/reference/specification/v3.0.0#messageBindingsObject
+    // TODO: implement based on https://www.asyncapi.com/docs/reference/specification/v3.0.0#messageBindingsObject
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]

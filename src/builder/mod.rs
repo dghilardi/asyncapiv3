@@ -1,10 +1,10 @@
-use crate::spec::{AsyncApiSpec, AsyncApiV3Spec};
 use crate::spec::channel::{Channel, Channels};
-use crate::spec::common::{ReferenceObject, RefOr};
+use crate::spec::common::{RefOr, ReferenceObject};
 use crate::spec::component::Components;
 use crate::spec::info::Info;
 use crate::spec::operation::{Operation, Operations};
 use crate::spec::server::{Server, Servers};
+use crate::spec::{AsyncApiSpec, AsyncApiV3Spec};
 
 pub mod operation;
 
@@ -47,11 +47,15 @@ impl AsyncApiV3Builder {
     }
 
     pub fn register_server(&mut self, name: &str, server: Server) {
-        self.spec.servers.insert(String::from(name), RefOr::Right(server));
+        self.spec
+            .servers
+            .insert(String::from(name), RefOr::Right(server));
     }
 
     pub fn register_server_ref(&mut self, name: &str, reference: ReferenceObject) {
-        self.spec.servers.insert(String::from(name), RefOr::Left(reference));
+        self.spec
+            .servers
+            .insert(String::from(name), RefOr::Left(reference));
     }
     pub fn channels(mut self, channels: Channels) -> Self {
         self.spec.channels = channels;
@@ -59,11 +63,15 @@ impl AsyncApiV3Builder {
     }
 
     pub fn register_channel(&mut self, name: &str, channel: Channel) {
-        self.spec.channels.insert(String::from(name), RefOr::Right(channel));
+        self.spec
+            .channels
+            .insert(String::from(name), RefOr::Right(channel));
     }
 
     pub fn register_channel_ref(&mut self, name: &str, reference: ReferenceObject) {
-        self.spec.channels.insert(String::from(name), RefOr::Left(reference));
+        self.spec
+            .channels
+            .insert(String::from(name), RefOr::Left(reference));
     }
     pub fn operations(mut self, operations: Operations) -> Self {
         self.spec.operations = operations;
@@ -71,11 +79,15 @@ impl AsyncApiV3Builder {
     }
 
     pub fn register_operation(&mut self, name: &str, operation: Operation) {
-        self.spec.operations.insert(String::from(name), RefOr::Right(operation));
+        self.spec
+            .operations
+            .insert(String::from(name), RefOr::Right(operation));
     }
 
     pub fn register_operation_ref(&mut self, name: &str, reference: ReferenceObject) {
-        self.spec.operations.insert(String::from(name), RefOr::Left(reference));
+        self.spec
+            .operations
+            .insert(String::from(name), RefOr::Left(reference));
     }
     pub fn components(mut self, components: Components) -> Self {
         self.spec.components = components;

@@ -7,5 +7,5 @@ pub enum Error {
     #[error("Duplicate operation entry '{name}'")]
     DuplicateOperation { name: String },
     #[error("Channel not found '{name}'")]
-    ChannelNotFound { name: String }
+    ChannelNotFound { name: String },
 }

@@ -1,6 +1,6 @@
-use std::collections::HashMap;
 use crate::spec::common::{ExternalDocumentation, RefOr, Tag};
 use crate::spec::security::SecurityScheme;
+use std::collections::HashMap;
 
 pub type Servers = HashMap<String, RefOr<Server>>;
 
