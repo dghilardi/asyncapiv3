@@ -24,3 +24,7 @@ serde_yaml = "0.9"
 
 [features]
 builder_unstable = ["log", "thiserror"]
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
