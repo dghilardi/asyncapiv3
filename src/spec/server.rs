@@ -7,38 +7,38 @@ pub type Servers = HashMap<String, RefOr<Server>>;
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Server {
-    ///	The server host name. It MAY include the port. This field supports Server Variables. Variable substitutions will be made when a variable is named in {braces}.
+    /// The server host name. It MAY include the port. This field supports Server Variables. Variable substitutions will be made when a variable is named in {braces}.
     pub host: String,
-    ///	The protocol this server supports for connection.
+    /// The protocol this server supports for connection.
     pub protocol: String,
-    ///	The version of the protocol used for connection. For instance: AMQP 0.9.1, HTTP 2.0, Kafka 1.0.0, etc.
+    /// The version of the protocol used for connection. For instance: AMQP 0.9.1, HTTP 2.0, Kafka 1.0.0, etc.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub protocol_version: Option<String>,
-    ///	The path to a resource in the host. This field supports Server Variables. Variable substitutions will be made when a variable is named in {braces}.
+    /// The path to a resource in the host. This field supports Server Variables. Variable substitutions will be made when a variable is named in {braces}.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub pathname: Option<String>,
-    ///	An optional string describing the server. CommonMark syntax MAY be used for rich text representation.
+    /// An optional string describing the server. CommonMark syntax MAY be used for rich text representation.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
-    ///	A human-friendly title for the server.
+    /// A human-friendly title for the server.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub title: Option<String>,
-    ///	A short summary of the server.
+    /// A short summary of the server.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub summary: Option<String>,
-    ///	A map between a variable name and its value. The value is used for substitution in the server's host and pathname template.
+    /// A map between a variable name and its value. The value is used for substitution in the server's host and pathname template.
     #[serde(default)]
     pub variables: HashMap<String, RefOr<Variable>>,
-    ///	A declaration of which security schemes can be used with this server. The list of values includes alternative security scheme objects that can be used. Only one of the security scheme objects need to be satisfied to authorize a connection or operation.
+    /// A declaration of which security schemes can be used with this server. The list of values includes alternative security scheme objects that can be used. Only one of the security scheme objects need to be satisfied to authorize a connection or operation.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub security: Vec<RefOr<SecurityScheme>>,
-    ///	Tags Object	A list of tags for logical grouping and categorization of servers.
+    /// Tags Object A list of tags for logical grouping and categorization of servers.
     #[serde(default)]
     pub tags: Vec<Tag>,
-    ///	Additional external documentation for this server.
+    /// Additional external documentation for this server.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub external_docs: Option<RefOr<ExternalDocumentation>>,
-    ///	A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the server.
+    /// A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the server.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub bindings: Option<RefOr<ServerBindings>>,
 }
