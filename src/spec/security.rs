@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct  SecurityScheme {
+pub struct SecurityScheme {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub user_password: Option<UserPasswordSecurityScheme>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -226,8 +226,15 @@ pub struct AuthorizationCodeOAuthFlow {
 
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub enum ApiKeyLocation { User, Password }
+pub enum ApiKeyLocation {
+    User,
+    Password,
+}
 
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub enum HttpApiKeyLocation { Query, Header, Cookie }
+pub enum HttpApiKeyLocation {
+    Query,
+    Header,
+    Cookie,
+}

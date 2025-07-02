@@ -27,7 +27,6 @@ pub struct Info {
     pub external_docs: Option<RefOr<ExternalDocumentation>>,
 }
 
-
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Contact {

@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use crate::spec::common::{Either, ExternalDocumentation, RefOr, Tag};
+use std::collections::HashMap;
 
 pub type Messages = HashMap<String, RefOr<Message>>;
 
@@ -52,7 +52,7 @@ pub struct Message {
 #[serde(rename_all = "camelCase")]
 /// The Multi Format Schema Object represents a schema definition. It differs from the Schema Object in that it supports multiple schema formats or languages (e.g., JSON Schema, Avro, etc.).
 pub struct MultiFormatSchema {
-    /// string	Required. A string containing the name of the schema format that is used to define the information. If schemaFormat is missing, it MUST default to application/vnd.aai.asyncapi+json;version={{asyncapi}} where {{asyncapi}} matches the AsyncAPI Version String. In such a case, this would make the Multi Format Schema Object equivalent to the Schema Object. When using Reference Object within the schema, the schemaFormat of the resource being referenced MUST match the schemaFormat of the schema that contains the initial reference. For example, if you reference Avro schema, then schemaFormat of referencing resource and the resource being reference MUST match.
+    /// string Required. A string containing the name of the schema format that is used to define the information. If schemaFormat is missing, it MUST default to application/vnd.aai.asyncapi+json;version={{asyncapi}} where {{asyncapi}} matches the AsyncAPI Version String. In such a case, this would make the Multi Format Schema Object equivalent to the Schema Object. When using Reference Object within the schema, the schemaFormat of the resource being referenced MUST match the schemaFormat of the schema that contains the initial reference. For example, if you reference Avro schema, then schemaFormat of referencing resource and the resource being reference MUST match.
     /// Check out the supported schema formats table for more information. Custom values are allowed but their implementation is OPTIONAL. A custom value MUST NOT refer to one of the schema formats listed in the table.
     /// When using Reference Objects within the schema, the schemaFormat of the referenced resource MUST match the schemaFormat of the schema containing the reference.
     pub schema_format: String,
@@ -73,7 +73,7 @@ pub struct CorrelationId {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct MessageBindings {
- // TODO: implement based on https://www.asyncapi.com/docs/reference/specification/v3.0.0#messageBindingsObject
+    // TODO: implement based on https://www.asyncapi.com/docs/reference/specification/v3.0.0#messageBindingsObject
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]

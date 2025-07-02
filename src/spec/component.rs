@@ -1,10 +1,14 @@
-use std::collections::HashMap;
 use crate::spec::channel::{Channel, ChannelBindings, Parameter};
 use crate::spec::common::{Either, ExternalDocumentation, RefOr, Tag};
-use crate::spec::message::{CorrelationId, Message, MessageBindings, MessageTrait, MultiFormatSchema};
-use crate::spec::operation::{Operation, OperationBindings, OperationReply, OperationReplyAddress, OperationTrait};
+use crate::spec::message::{
+    CorrelationId, Message, MessageBindings, MessageTrait, MultiFormatSchema,
+};
+use crate::spec::operation::{
+    Operation, OperationBindings, OperationReply, OperationReplyAddress, OperationTrait,
+};
 use crate::spec::security::SecurityScheme;
 use crate::spec::server::{Server, ServerBindings, Variable};
+use std::collections::HashMap;
 
 #[derive(serde::Serialize, serde::Deserialize, Default)]
 #[serde(rename_all = "camelCase")]
