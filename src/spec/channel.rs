@@ -1,6 +1,6 @@
-use std::collections::HashMap;
-use crate::spec::common::{ExternalDocumentation, ReferenceObject, RefOr, Tag};
+use crate::spec::common::{ExternalDocumentation, RefOr, ReferenceObject, Tag};
 use crate::spec::message::Messages;
+use std::collections::HashMap;
 
 pub type Channels = HashMap<String, RefOr<Channel>>;
 

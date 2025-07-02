@@ -5,19 +5,19 @@ use crate::spec::operation::Operations;
 use crate::spec::server::Servers;
 
 pub mod channel;
+pub mod common;
 pub mod component;
 pub mod info;
-pub mod operation;
-pub mod server;
-pub mod common;
 pub mod message;
+pub mod operation;
 pub mod security;
+pub mod server;
 
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(tag = "asyncapi")]
 pub enum AsyncApiSpec {
     #[serde(rename = "3.0.0")]
-    V3_0_0(AsyncApiV3Spec)
+    V3_0_0(AsyncApiV3Spec),
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]

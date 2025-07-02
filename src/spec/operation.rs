@@ -1,6 +1,6 @@
-use std::collections::HashMap;
-use crate::spec::common::{ExternalDocumentation, ReferenceObject, RefOr, Tag};
+use crate::spec::common::{ExternalDocumentation, RefOr, ReferenceObject, Tag};
 use crate::spec::security::SecurityScheme;
+use std::collections::HashMap;
 
 pub type Operations = HashMap<String, RefOr<Operation>>;
 
@@ -46,7 +46,10 @@ pub struct Operation {
 
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub enum OperationAction { Send, Receive }
+pub enum OperationAction {
+    Send,
+    Receive,
+}
 
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
