@@ -1,0 +1,12 @@
+[vcs]
+software = "Git"
+
+[modules.root]
+path = "."
+packageManager = "Cargo"
+
+[modules.root.hooks.after_rel]
+build = ["cargo", "build"]
+test = ["cargo", "test"]
+fmt_check = ["cargo", "fmt", "--all", "--", "--check"]
+clippy_check = ["cargo", "clippy", "--", "-D", "warnings"]
