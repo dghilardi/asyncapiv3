@@ -60,11 +60,11 @@ pub struct OperationBindings {
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]
-#[serde(rename_all = "camelCase")]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct WebSocketOperationBinding {}
 
 #[derive(serde::Serialize, serde::Deserialize)]
-#[serde(rename_all = "camelCase")]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct NatsOperationBinding {
     /// Defines the name of the queue to use.
     /// It MUST NOT exceed 255 characters.

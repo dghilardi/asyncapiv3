@@ -79,11 +79,11 @@ pub struct MessageBindings {
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]
-#[serde(rename_all = "camelCase")]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct WebSocketMessageBinding {}
 
 #[derive(serde::Serialize, serde::Deserialize)]
-#[serde(rename_all = "camelCase")]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct NatsMessageBinding {}
 
 #[derive(serde::Serialize, serde::Deserialize)]
