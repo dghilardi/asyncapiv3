@@ -65,4 +65,41 @@ pub struct Parameter {
 #[serde(rename_all = "camelCase")]
 pub struct ChannelBindings {
     // TODO: implement based on https://www.asyncapi.com/docs/reference/specification/v3.0.0#channelBindingsObject
+    /// Protocol-specific information for a WebSockets channel.
+    ws: Option<WebSocketChannelBinding>,
+    /// Protocol-specific information for a NATS channel
+    nats: Option<NatsChannelBinding>,
 }
+
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "UPPERCASE")]
+pub enum WebSocketHttpMethod {
+    Get,
+    Post,
+}
+
+/// When using WebSockets, the channel represents the connection.
+/// Unlike other protocols that support multiple virtual channels (topics, routing keys, etc.) per connection,
+/// WebSockets doesn't support virtual channels
+/// or, put it another way, there's only one channel
+/// and its characteristics are strongly related to the protocol used for the handshake, i.e., HTTP.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct WebSocketChannelBinding {
+    /// The HTTP method to use when establishing the connection.
+    /// Must be either "GET" or "POST".
+    pub method: WebSocketHttpMethod,
+    /// A Schema object containing the definitions for each query parameter.
+    /// This schema MUST be of type `object` and have a `properties` key.
+    pub query: RefOr<schemars::Schema>,
+    /// A Schema object containing the definitions of the HTTP headers to use when establishing the connection.
+    /// This schema MUST be of type `object` and have a `properties` key.
+    pub headers: RefOr<schemars::Schema>,
+    /// The version of this binding. If omitted, "latest" is assumed.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub binding_version: Option<String>,
+}
+
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct NatsChannelBinding {}
