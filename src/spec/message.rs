@@ -74,7 +74,17 @@ pub struct CorrelationId {
 #[serde(rename_all = "camelCase")]
 pub struct MessageBindings {
     // TODO: implement based on https://www.asyncapi.com/docs/reference/specification/v3.0.0#messageBindingsObject
+    pub ws: Option<WebSocketMessageBinding>,
+    pub nats: Option<NatsMessageBinding>,
 }
+
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct WebSocketMessageBinding {}
+
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct NatsMessageBinding {}
 
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]

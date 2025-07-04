@@ -65,7 +65,7 @@ pub struct Parameter {
 #[serde(rename_all = "camelCase")]
 pub struct ChannelBindings {
     // TODO: implement based on https://www.asyncapi.com/docs/reference/specification/v3.0.0#channelBindingsObject
-    /// Protocol-specific information for a WebSockets channel.
+    // /// Protocol-specific information for a WebSockets channel.
     ws: Option<WebSocketChannelBinding>,
     /// Protocol-specific information for a NATS channel
     nats: Option<NatsChannelBinding>,
@@ -88,13 +88,16 @@ pub enum WebSocketHttpMethod {
 pub struct WebSocketChannelBinding {
     /// The HTTP method to use when establishing the connection.
     /// Must be either "GET" or "POST".
-    pub method: WebSocketHttpMethod,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub method: Option<WebSocketHttpMethod>,
     /// A Schema object containing the definitions for each query parameter.
     /// This schema MUST be of type `object` and have a `properties` key.
-    pub query: RefOr<schemars::Schema>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub query: Option<RefOr<schemars::Schema>>,
     /// A Schema object containing the definitions of the HTTP headers to use when establishing the connection.
     /// This schema MUST be of type `object` and have a `properties` key.
-    pub headers: RefOr<schemars::Schema>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub headers: Option<RefOr<schemars::Schema>>,
     /// The version of this binding. If omitted, "latest" is assumed.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub binding_version: Option<String>,

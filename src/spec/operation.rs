@@ -55,6 +55,22 @@ pub enum OperationAction {
 #[serde(rename_all = "camelCase")]
 pub struct OperationBindings {
     //TODO: implement operation-binding object https://www.asyncapi.com/docs/reference/specification/v3.0.0#operationBindingsObject
+    pub ws: Option<WebSocketOperationBinding>,
+    pub nats: Option<NatsOperationBinding>,
+}
+
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct WebSocketOperationBinding {}
+
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct NatsOperationBinding {
+    /// Defines the name of the queue to use.
+    /// It MUST NOT exceed 255 characters.
+    pub queue: String,
+    /// The version of this binding. If omitted, "latest" MUST be assumed.
+    pub binding_version: String,
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]
