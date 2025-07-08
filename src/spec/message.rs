@@ -91,15 +91,15 @@ pub struct NatsMessageBinding;
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct HttpMessageBinding {
-    // Field Name	Type	Description
-    // bindingVersion	string	The version of this binding. If omitted, "latest" MUST be assumed.
-    /// A Schema object containing the definitions for HTTP-specific headers. This schema MUST be of type object and have a properties key.
+    /// A Schema object containing the definitions for HTTP-specific headers.
+    /// This schema MUST be of type `object`` and have a `properties` key.
     pub headers: Option<RefOr<schemars::Schema>>,
     /// The HTTP response status code according to `RFC 9110`.
     /// Only relevant for messages referenced by the `Operation Reply Object`,
     /// as it defines the status code for the response.
     /// In all other cases, this value can be safely ignored.
     pub status_code: Option<NonZeroU16>,
+    /// The version of this binding. If omitted, "latest" MUST be assumed.
     pub binding_version: Option<String>,
 }
 
