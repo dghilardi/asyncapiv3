@@ -66,10 +66,13 @@ pub struct Parameter {
 pub struct ChannelBindings {
     // TODO: implement based on https://www.asyncapi.com/docs/reference/specification/v3.0.0#channelBindingsObject
     /// Protocol-specific information for a WebSockets channel.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub ws: Option<WebSocketChannelBinding>,
     /// Protocol-specific information for a NATS channel
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub nats: Option<NatsChannelBinding>,
     /// Protocol-specific information for an HTTP channel.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub http: Option<HttpChannelBinding>,
 }
 

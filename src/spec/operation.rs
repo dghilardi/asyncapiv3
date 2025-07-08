@@ -55,8 +55,11 @@ pub enum OperationAction {
 #[serde(rename_all = "camelCase")]
 pub struct OperationBindings {
     //TODO: implement operation-binding object https://www.asyncapi.com/docs/reference/specification/v3.0.0#operationBindingsObject
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub ws: Option<WebSocketOperationBinding>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub nats: Option<NatsOperationBinding>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub http: Option<HttpOperationBinding>,
 }
 
@@ -81,8 +84,10 @@ pub struct HttpOperationBinding {
     pub method: HttpOperationMethod,
     /// A Schema object containing the definitions for each query parameter.
     /// This schema MUST be of type object and have a properties key.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub query: Option<RefOr<schemars::Schema>>,
     /// The version of this binding. If omitted, "latest" MUST be assumed.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub binding_version: Option<String>,
 }
 
@@ -97,6 +102,7 @@ pub struct NatsOperationBinding {
     /// It MUST NOT exceed 255 characters.
     pub queue: String,
     /// The version of this binding. If omitted, "latest" MUST be assumed.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub binding_version: Option<String>,
 }
 
