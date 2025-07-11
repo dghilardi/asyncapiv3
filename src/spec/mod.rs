@@ -13,14 +13,14 @@ pub mod operation;
 pub mod security;
 pub mod server;
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, Debug)]
 #[serde(tag = "asyncapi")]
 pub enum AsyncApiSpec {
     #[serde(rename = "3.0.0")]
     V3_0_0(AsyncApiV3Spec),
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct AsyncApiV3Spec {
     /// Identifier of the application the AsyncAPI document is defining.

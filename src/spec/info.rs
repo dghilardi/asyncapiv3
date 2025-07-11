@@ -1,6 +1,6 @@
 use crate::spec::common::{ExternalDocumentation, RefOr, Tag};
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Info {
     /// The title of the application.
@@ -27,7 +27,7 @@ pub struct Info {
     pub external_docs: Option<RefOr<ExternalDocumentation>>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Contact {
     /// The identifying name of the contact person/organization.
@@ -41,7 +41,7 @@ pub struct Contact {
     pub email: Option<String>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct License {
     /// The license name used for the API.

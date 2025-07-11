@@ -33,7 +33,7 @@ impl ReferenceObject {
 
 pub type RefOr<T> = Either<ReferenceObject, T>;
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Tag {
     /// The name of the tag.
@@ -46,7 +46,7 @@ pub struct Tag {
     pub external_docs: Option<RefOr<ExternalDocumentation>>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ExternalDocumentation {
     /// A short description of the target documentation. CommonMark syntax can be used for rich text representation.

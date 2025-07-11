@@ -10,7 +10,7 @@ use crate::spec::security::SecurityScheme;
 use crate::spec::server::{Server, ServerBindings, Variable};
 use std::collections::HashMap;
 
-#[derive(serde::Serialize, serde::Deserialize, Default)]
+#[derive(serde::Serialize, serde::Deserialize, Debug, Default)]
 #[serde(rename_all = "camelCase")]
 /// Holds a set of reusable objects for different aspects of the AsyncAPI specification. All objects defined within the components object will have no effect on the API unless they are explicitly referenced from properties outside the components object.
 pub struct Components {
