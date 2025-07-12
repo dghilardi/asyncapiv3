@@ -46,7 +46,7 @@ impl ReferenceObject {
 
 pub type RefOr<T> = Either<ReferenceObject, T>;
 
-#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Tag {
     /// The name of the tag.

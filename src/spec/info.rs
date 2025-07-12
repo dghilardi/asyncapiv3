@@ -1,6 +1,6 @@
 use crate::spec::common::{ExternalDocumentation, RefOr, Tag};
 
-#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Info {
     /// The title of the application.

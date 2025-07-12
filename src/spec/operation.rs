@@ -4,7 +4,7 @@ use std::collections::HashMap;
 
 pub type Operations = HashMap<String, RefOr<Operation>>;
 
-#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 /// Describes a specific operation.
 pub struct Operation {
@@ -51,7 +51,7 @@ pub enum OperationAction {
     Receive,
 }
 
-#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct OperationBindings {
     //TODO: implement operation-binding object https://www.asyncapi.com/docs/reference/specification/v3.0.0#operationBindingsObject
@@ -77,7 +77,7 @@ pub enum HttpOperationMethod {
     Trace,
 }
 
-#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct HttpOperationBinding {
     /// The HTTP method for the request.
@@ -112,7 +112,7 @@ impl NatsOperationBinding {
     }
 }
 
-#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 /// Describes a trait that MAY be applied to an [Operation Object](Operation). This object MAY contain any property from the [Operation Object](Operation), except the action, channel and traits ones.
 /// If you're looking to apply traits to a message, see the [Message Trait Object](super::message::MessageTrait).
@@ -140,7 +140,7 @@ pub struct OperationTrait {
     pub bindings: Option<RefOr<OperationBindings>>,
 }
 
-#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 /// Describes the reply part that MAY be applied to an [Operation Object](Operation). If an operation implements the request/reply pattern, the reply object represents the response message.
 pub struct OperationReply {
