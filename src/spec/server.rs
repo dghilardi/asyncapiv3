@@ -65,4 +65,22 @@ pub struct Variable {
 #[serde(rename_all = "camelCase")]
 pub struct ServerBindings {
     //TODO: implement server-binding object https://www.asyncapi.com/docs/reference/specification/v3.0.0#serverBindingsObject
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub ws: Option<WebSocketServerBinding>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub nats: Option<NatsServerBinding>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub http: Option<HttpServerBinding>,
 }
+
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct WebSocketServerBinding;
+
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct NatsServerBinding;
+
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct HttpServerBinding;

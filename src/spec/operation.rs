@@ -55,6 +55,61 @@ pub enum OperationAction {
 #[serde(rename_all = "camelCase")]
 pub struct OperationBindings {
     //TODO: implement operation-binding object https://www.asyncapi.com/docs/reference/specification/v3.0.0#operationBindingsObject
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub ws: Option<WebSocketOperationBinding>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub nats: Option<NatsOperationBinding>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub http: Option<HttpOperationBinding>,
+}
+
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "UPPERCASE")]
+pub enum HttpOperationMethod {
+    Get,
+    Post,
+    Put,
+    Patch,
+    Delete,
+    Head,
+    Options,
+    Connect,
+    Trace,
+}
+
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct HttpOperationBinding {
+    /// The HTTP method for the request.
+    pub method: HttpOperationMethod,
+    /// A Schema object containing the definitions for each query parameter.
+    /// This schema MUST be of type object and have a properties key.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub query: Option<RefOr<schemars::Schema>>,
+    /// The version of this binding. If omitted, "latest" MUST be assumed.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub binding_version: Option<String>,
+}
+
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct WebSocketOperationBinding;
+
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct NatsOperationBinding {
+    /// Defines the name of the queue to use.
+    /// It MUST NOT exceed 255 characters.
+    pub queue: String,
+    /// The version of this binding. If omitted, "latest" MUST be assumed.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub binding_version: Option<String>,
+}
+
+impl NatsOperationBinding {
+    pub fn binding_version(&self) -> &str {
+        self.binding_version.as_deref().unwrap_or("latest")
+    }
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]

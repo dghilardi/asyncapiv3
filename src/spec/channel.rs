@@ -65,4 +65,58 @@ pub struct Parameter {
 #[serde(rename_all = "camelCase")]
 pub struct ChannelBindings {
     // TODO: implement based on https://www.asyncapi.com/docs/reference/specification/v3.0.0#channelBindingsObject
+    /// Protocol-specific information for a WebSockets channel.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub ws: Option<WebSocketChannelBinding>,
+    /// Protocol-specific information for a NATS channel
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub nats: Option<NatsChannelBinding>,
+    /// Protocol-specific information for an HTTP channel.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub http: Option<HttpChannelBinding>,
 }
+
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "UPPERCASE")]
+pub enum WebSocketHttpMethod {
+    Get,
+    Post,
+}
+
+/// When using WebSockets, the channel represents the connection.
+/// Unlike other protocols that support multiple virtual channels (topics, routing keys, etc.) per connection,
+/// WebSockets doesn't support virtual channels
+/// or, put it another way, there's only one channel
+/// and its characteristics are strongly related to the protocol used for the handshake, i.e., HTTP.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct WebSocketChannelBinding {
+    /// The HTTP method to use when establishing the connection.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub method: Option<WebSocketHttpMethod>,
+    /// A Schema object containing the definitions for each query parameter.
+    /// This schema MUST be of type `object` and have a `properties` key.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub query: Option<RefOr<schemars::Schema>>,
+    /// A Schema object containing the definitions of the HTTP headers to use when establishing the connection.
+    /// This schema MUST be of type `object` and have a `properties` key.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub headers: Option<RefOr<schemars::Schema>>,
+    /// The version of this binding. If omitted, "latest" is assumed.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub binding_version: Option<String>,
+}
+
+impl WebSocketChannelBinding {
+    pub fn binding_version(&self) -> &str {
+        self.binding_version.as_deref().unwrap_or("latest")
+    }
+}
+
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct NatsChannelBinding;
+
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct HttpChannelBinding;

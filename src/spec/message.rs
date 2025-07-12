@@ -1,4 +1,5 @@
 use crate::spec::common::{Either, ExternalDocumentation, RefOr, Tag};
+use core::num::NonZeroU16;
 use std::collections::HashMap;
 
 pub type Messages = HashMap<String, RefOr<Message>>;
@@ -74,6 +75,44 @@ pub struct CorrelationId {
 #[serde(rename_all = "camelCase")]
 pub struct MessageBindings {
     // TODO: implement based on https://www.asyncapi.com/docs/reference/specification/v3.0.0#messageBindingsObject
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub ws: Option<WebSocketMessageBinding>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub nats: Option<NatsMessageBinding>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub http: Option<HttpMessageBinding>,
+}
+
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct WebSocketMessageBinding;
+
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct NatsMessageBinding;
+
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct HttpMessageBinding {
+    /// A Schema object containing the definitions for HTTP-specific headers.
+    /// This schema MUST be of type `object`` and have a `properties` key.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub headers: Option<RefOr<schemars::Schema>>,
+    /// The HTTP response status code according to `RFC 9110`.
+    /// Only relevant for messages referenced by the `Operation Reply Object`,
+    /// as it defines the status code for the response.
+    /// In all other cases, this value can be safely ignored.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub status_code: Option<NonZeroU16>,
+    /// The version of this binding. If omitted, "latest" MUST be assumed.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub binding_version: Option<String>,
+}
+
+impl HttpMessageBinding {
+    pub fn binding_version(&self) -> &str {
+        self.binding_version.as_deref().unwrap_or("latest")
+    }
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]
