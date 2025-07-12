@@ -4,7 +4,7 @@ use std::collections::HashMap;
 
 pub type Messages = HashMap<String, RefOr<Message>>;
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 /// Describes a message received on a given channel and operation.
 pub struct Message {
@@ -49,7 +49,7 @@ pub struct Message {
     pub traits: Vec<RefOr<MessageTrait>>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, PartialEq, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 /// The Multi Format Schema Object represents a schema definition. It differs from the Schema Object in that it supports multiple schema formats or languages (e.g., JSON Schema, Avro, etc.).
 pub struct MultiFormatSchema {
@@ -61,7 +61,7 @@ pub struct MultiFormatSchema {
     pub schema: serde_json::Value,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CorrelationId {
     /// An optional description of the identifier. CommonMark syntax can be used for rich text representation.
@@ -71,7 +71,7 @@ pub struct CorrelationId {
     pub location: String,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct MessageBindings {
     // TODO: implement based on https://www.asyncapi.com/docs/reference/specification/v3.0.0#messageBindingsObject
@@ -83,15 +83,15 @@ pub struct MessageBindings {
     pub http: Option<HttpMessageBinding>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct WebSocketMessageBinding;
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct NatsMessageBinding;
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct HttpMessageBinding {
     /// A Schema object containing the definitions for HTTP-specific headers.
@@ -115,7 +115,7 @@ impl HttpMessageBinding {
     }
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 /// Message Example Object represents an example of a Message Object and MUST contain either headers and/or payload fields.
 pub struct MessageExample {
@@ -133,7 +133,7 @@ pub struct MessageExample {
     pub summary: Option<String>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 /// Describes a trait that MAY be applied to a Message Object. This object MAY contain any property from the Message Object, except payload and traits.
 /// If you're looking to apply traits to an operation, see the Operation Trait Object.
