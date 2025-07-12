@@ -4,7 +4,7 @@ use std::collections::HashMap;
 
 pub type Servers = HashMap<String, RefOr<Server>>;
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Server {
     /// The server host name. It MAY include the port. This field supports Server Variables. Variable substitutions will be made when a variable is named in {braces}.
@@ -43,7 +43,7 @@ pub struct Server {
     pub bindings: Option<RefOr<ServerBindings>>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Variable {
     /// An enumeration of string values to be used if the substitution options are from a limited set.
@@ -61,7 +61,7 @@ pub struct Variable {
     pub examples: Vec<String>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ServerBindings {
     //TODO: implement server-binding object https://www.asyncapi.com/docs/reference/specification/v3.0.0#serverBindingsObject
@@ -73,14 +73,14 @@ pub struct ServerBindings {
     pub http: Option<HttpServerBinding>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Copy, Debug, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct WebSocketServerBinding;
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Copy, Debug, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct NatsServerBinding;
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Copy, Debug, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct HttpServerBinding;

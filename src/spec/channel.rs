@@ -4,7 +4,7 @@ use std::collections::HashMap;
 
 pub type Channels = HashMap<String, RefOr<Channel>>;
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Channel {
     /// An optional string representation of this channel's address. The address is typically the "topic name", "routing key", "event type", or "path". When null or absent, it MUST be interpreted as unknown. This is useful when the address is generated dynamically at runtime or can't be known upfront. It MAY contain Channel Address Expressions. Query parameters and fragments SHALL NOT be used, instead use bindings to define them.
@@ -40,7 +40,7 @@ pub struct Channel {
 
 pub type Parameters = HashMap<String, RefOr<Parameter>>;
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Parameter {
     /// An enumeration of string values to be used if the substitution options are from a limited set.
@@ -61,7 +61,7 @@ pub struct Parameter {
     pub location: Option<String>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ChannelBindings {
     // TODO: implement based on https://www.asyncapi.com/docs/reference/specification/v3.0.0#channelBindingsObject
@@ -76,7 +76,7 @@ pub struct ChannelBindings {
     pub http: Option<HttpChannelBinding>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "UPPERCASE")]
 pub enum WebSocketHttpMethod {
     Get,
@@ -88,7 +88,7 @@ pub enum WebSocketHttpMethod {
 /// WebSockets doesn't support virtual channels
 /// or, put it another way, there's only one channel
 /// and its characteristics are strongly related to the protocol used for the handshake, i.e., HTTP.
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct WebSocketChannelBinding {
     /// The HTTP method to use when establishing the connection.
@@ -113,10 +113,10 @@ impl WebSocketChannelBinding {
     }
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct NatsChannelBinding;
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct HttpChannelBinding;

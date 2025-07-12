@@ -1,11 +1,24 @@
-#[derive(serde::Serialize, serde::Deserialize, PartialEq, Debug)]
+#[derive(serde::Serialize, serde::Deserialize, Debug, PartialEq)]
 #[serde(untagged)]
 pub enum Either<L, R> {
     Left(L),
     Right(R),
 }
 
-#[derive(serde::Serialize, serde::Deserialize, PartialEq, Debug)]
+impl<L, R> Clone for Either<L, R>
+where
+    L: Clone,
+    R: Clone,
+{
+    fn clone(&self) -> Self {
+        match self {
+            Self::Left(l) => Self::Left(l.clone()),
+            Self::Right(r) => Self::Right(r.clone()),
+        }
+    }
+}
+
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct ReferenceObject {
     #[serde(rename = "$ref")]
     pub reference: String,
@@ -33,7 +46,7 @@ impl ReferenceObject {
 
 pub type RefOr<T> = Either<ReferenceObject, T>;
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Tag {
     /// The name of the tag.
@@ -46,7 +59,7 @@ pub struct Tag {
     pub external_docs: Option<RefOr<ExternalDocumentation>>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ExternalDocumentation {
     /// A short description of the target documentation. CommonMark syntax can be used for rich text representation.

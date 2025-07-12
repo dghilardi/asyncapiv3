@@ -4,7 +4,7 @@ use std::collections::HashMap;
 
 pub type Operations = HashMap<String, RefOr<Operation>>;
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 /// Describes a specific operation.
 pub struct Operation {
@@ -44,14 +44,14 @@ pub struct Operation {
     pub reply: Option<RefOr<OperationReply>>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub enum OperationAction {
     Send,
     Receive,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct OperationBindings {
     //TODO: implement operation-binding object https://www.asyncapi.com/docs/reference/specification/v3.0.0#operationBindingsObject
@@ -63,7 +63,7 @@ pub struct OperationBindings {
     pub http: Option<HttpOperationBinding>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "UPPERCASE")]
 pub enum HttpOperationMethod {
     Get,
@@ -77,7 +77,7 @@ pub enum HttpOperationMethod {
     Trace,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct HttpOperationBinding {
     /// The HTTP method for the request.
@@ -91,11 +91,11 @@ pub struct HttpOperationBinding {
     pub binding_version: Option<String>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct WebSocketOperationBinding;
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct NatsOperationBinding {
     /// Defines the name of the queue to use.
@@ -112,7 +112,7 @@ impl NatsOperationBinding {
     }
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 /// Describes a trait that MAY be applied to an [Operation Object](Operation). This object MAY contain any property from the [Operation Object](Operation), except the action, channel and traits ones.
 /// If you're looking to apply traits to a message, see the [Message Trait Object](super::message::MessageTrait).
@@ -140,7 +140,7 @@ pub struct OperationTrait {
     pub bindings: Option<RefOr<OperationBindings>>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 /// Describes the reply part that MAY be applied to an [Operation Object](Operation). If an operation implements the request/reply pattern, the reply object represents the response message.
 pub struct OperationReply {
@@ -155,7 +155,7 @@ pub struct OperationReply {
     pub messages: Vec<ReferenceObject>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 /// An object that specifies where an operation has to send the reply.
 /// For specifying and computing the location of a reply address, a [runtime expression](https://www.asyncapi.com/docs/reference/specification/v3.0.0#runtimeExpression) is used.

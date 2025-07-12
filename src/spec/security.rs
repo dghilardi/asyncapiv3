@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SecurityScheme {
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -31,7 +31,7 @@ pub struct SecurityScheme {
     pub gssapi: Option<GssapiSecurityScheme>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UserPasswordSecurityScheme {
     /// A short description for security scheme. CommonMark syntax MAY be used for rich text representation.
@@ -39,7 +39,7 @@ pub struct UserPasswordSecurityScheme {
     pub description: Option<String>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ApiKeySecurityScheme {
     /// A short description for security scheme. CommonMark syntax MAY be used for rich text representation.
@@ -50,7 +50,7 @@ pub struct ApiKeySecurityScheme {
     pub location: ApiKeyLocation,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct X509SecurityScheme {
     /// A short description for security scheme. CommonMark syntax MAY be used for rich text representation.
@@ -58,7 +58,7 @@ pub struct X509SecurityScheme {
     pub description: Option<String>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SymmetricEncryptionSecurityScheme {
     /// A short description for security scheme. CommonMark syntax MAY be used for rich text representation.
@@ -66,7 +66,7 @@ pub struct SymmetricEncryptionSecurityScheme {
     pub description: Option<String>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AsymmetricEncryptionSecurityScheme {
     /// A short description for security scheme. CommonMark syntax MAY be used for rich text representation.
@@ -74,7 +74,7 @@ pub struct AsymmetricEncryptionSecurityScheme {
     pub description: Option<String>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct HttpApiKeySecurityScheme {
     /// A short description for security scheme. CommonMark syntax MAY be used for rich text representation.
@@ -87,7 +87,7 @@ pub struct HttpApiKeySecurityScheme {
     pub location: HttpApiKeyLocation,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct HttpSecurityScheme {
     /// A short description for security scheme. CommonMark syntax MAY be used for rich text representation.
@@ -100,7 +100,7 @@ pub struct HttpSecurityScheme {
     pub bearer_format: Option<String>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Oauth2SecurityScheme {
     /// A short description for security scheme. CommonMark syntax MAY be used for rich text representation.
@@ -113,7 +113,7 @@ pub struct Oauth2SecurityScheme {
     pub scopes: Vec<String>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct OpenIdConnectSecurityScheme {
     /// A short description for security scheme. CommonMark syntax MAY be used for rich text representation.
@@ -126,7 +126,7 @@ pub struct OpenIdConnectSecurityScheme {
     pub scopes: Vec<String>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PlainSecurityScheme {
     /// A short description for security scheme. CommonMark syntax MAY be used for rich text representation.
@@ -134,7 +134,7 @@ pub struct PlainSecurityScheme {
     pub description: Option<String>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ScramSha256SecurityScheme {
     /// A short description for security scheme. CommonMark syntax MAY be used for rich text representation.
@@ -142,7 +142,7 @@ pub struct ScramSha256SecurityScheme {
     pub description: Option<String>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ScramSha512SecurityScheme {
     /// A short description for security scheme. CommonMark syntax MAY be used for rich text representation.
@@ -150,7 +150,7 @@ pub struct ScramSha512SecurityScheme {
     pub description: Option<String>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GssapiSecurityScheme {
     /// A short description for security scheme. CommonMark syntax MAY be used for rich text representation.
@@ -158,7 +158,7 @@ pub struct GssapiSecurityScheme {
     pub description: Option<String>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct OAuthFlows {
     /// Configuration for the OAuth Implicit flow.
@@ -175,7 +175,7 @@ pub struct OAuthFlows {
     pub authorization_code: Option<AuthorizationCodeOAuthFlow>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ImplicitOAuthFlow {
     /// The authorization URL to be used for this flow. This MUST be in the form of an absolute URL.
@@ -186,7 +186,7 @@ pub struct ImplicitOAuthFlow {
     available_scopes: HashMap<String, String>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PasswordOAuthFlow {
     /// The token URL to be used for this flow. This MUST be in the form of an absolute URL.
@@ -198,7 +198,7 @@ pub struct PasswordOAuthFlow {
     available_scopes: HashMap<String, String>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ClientCredentialsOAuthFlow {
     /// The token URL to be used for this flow. This MUST be in the form of an absolute URL.
@@ -210,7 +210,7 @@ pub struct ClientCredentialsOAuthFlow {
     available_scopes: HashMap<String, String>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AuthorizationCodeOAuthFlow {
     /// The authorization URL to be used for this flow. This MUST be in the form of an absolute URL.
@@ -224,14 +224,14 @@ pub struct AuthorizationCodeOAuthFlow {
     available_scopes: HashMap<String, String>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub enum ApiKeyLocation {
     User,
     Password,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub enum HttpApiKeyLocation {
     Query,
