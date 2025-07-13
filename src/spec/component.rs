@@ -1,3 +1,5 @@
+//! Contains types related to the [components
+//! field](https://www.asyncapi.com/docs/concepts/asyncapi-document/structure#components-field).
 use crate::spec::channel::{Channel, ChannelBindings, Parameter};
 use crate::spec::common::{Either, ExternalDocumentation, RefOr, Tag};
 use crate::spec::message::{

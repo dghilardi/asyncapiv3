@@ -1,3 +1,4 @@
+//! Contains the types present in a specification.
 use crate::spec::channel::Channels;
 use crate::spec::component::Components;
 use crate::spec::info::Info;
@@ -13,13 +14,16 @@ pub mod operation;
 pub mod security;
 pub mod server;
 
+/// Enum to store a versioned instance of the specification.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(tag = "asyncapi")]
 pub enum AsyncApiSpec {
+    /// Version 3.0.0 of the specification
     #[serde(rename = "3.0.0")]
     V3_0_0(AsyncApiV3Spec),
 }
 
+/// Root type of an AsyncAPI 3 specification.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AsyncApiV3Spec {

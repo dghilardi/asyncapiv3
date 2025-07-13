@@ -1,3 +1,5 @@
+//! Contains types related to the [servers
+//! field](https://www.asyncapi.com/docs/concepts/asyncapi-document/structure#servers-field)
 use crate::spec::common::{ExternalDocumentation, RefOr, Tag};
 use crate::spec::security::SecurityScheme;
 use std::collections::HashMap;

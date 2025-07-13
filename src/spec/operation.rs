@@ -1,3 +1,5 @@
+//! Contains types related to the [operations
+//! field](https://www.asyncapi.com/docs/concepts/asyncapi-document/structure#operations-field)
 use crate::spec::common::{ExternalDocumentation, RefOr, ReferenceObject, Tag};
 use crate::spec::security::SecurityScheme;
 use std::collections::HashMap;

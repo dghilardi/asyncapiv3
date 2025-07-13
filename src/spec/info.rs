@@ -1,5 +1,13 @@
+//! Contains types related to the [info
+//! field](https://www.asyncapi.com/docs/concepts/asyncapi-document/structure#info-field)
 use crate::spec::common::{ExternalDocumentation, RefOr, Tag};
 
+/// The info field in an API document offers crucial metadata, including the API's title,
+/// version, description, contact details, and license. This field provides a
+/// comprehensive overview of the API, aiding developers, architects, and other
+/// stakeholders in quickly grasping its purpose and capabilities. As a mandatory element
+/// of the AsyncAPI specification, the info field often serves as the initial reference
+/// point for users navigating the API documentation.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Info {

@@ -1,3 +1,6 @@
+//! Contains the [message
+//! object](https://www.asyncapi.com/docs/reference/specification/v3.0.0#messageObject) and related
+//! types.
 use crate::spec::common::{Either, ExternalDocumentation, RefOr, Tag};
 use core::num::NonZeroU16;
 use std::collections::HashMap;

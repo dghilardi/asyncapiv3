@@ -5,4 +5,9 @@
 [![Documentation](https://docs.rs/asyncapiv3/badge.svg)](https://docs.rs/asyncapiv3)
 ![License](https://img.shields.io/crates/l/asyncapiv3.svg)
 
-Representation of the Asyncapi v3 spec
+Representation of the [AsyncAPI](https://www.asyncapi.com/) v3 specification.
+AsyncAPI is a standard inspired by OpenAPI/Swagger targetting asynchronous
+and event-driven APIs.
+
+This project aims to allow users to parse AsyncAPI specifications into Rust
+objects as well as creating and serializing AsyncAPI specifications.
