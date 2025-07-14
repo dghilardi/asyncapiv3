@@ -1,5 +1,12 @@
+//! Represents the AsyncAPI security property as well as the various security schemes supported in
+//! the specification.
 use std::collections::HashMap;
 
+/// You can describe how your server is secured with the security property where you define
+/// which security schemes can be used with the server in context. Each server in the
+/// AsyncAPI document can have one or more security schemes declared. A security scheme
+/// defines a security requirement that must be satisfied to authorize an operation, such as an
+/// API key or a username and password.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SecurityScheme {
@@ -231,10 +238,14 @@ pub enum ApiKeyLocation {
     Password,
 }
 
+/// Represents where the users API key is located.
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub enum HttpApiKeyLocation {
+    /// Located in the HTTP query string e.g. `?api_key=<KEY>`
     Query,
+    /// Located in a HTTP Header for example the `Authorization` header
     Header,
+    /// Located in a session cookie
     Cookie,
 }
