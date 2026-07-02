@@ -13,6 +13,7 @@ readme = "README.md"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+indexmap = { version = "2.0", features = ["serde"], optional = true }
 log = { version = "0.4", optional = true }
 schemars = "1.0"
 serde = { version = "1.0", features = ["derive"] }
@@ -25,6 +26,7 @@ serde_yaml = "0.9"
 [features]
 default = ["writer" ]
 writer = ["log", "thiserror"]
+preserve_order = ["dep:indexmap", "schemars/preserve_order", "serde_json/preserve_order"]
 
 [package.metadata.docs.rs]
 all-features = true

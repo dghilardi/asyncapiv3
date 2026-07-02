@@ -2,9 +2,9 @@
 //! field](https://www.asyncapi.com/docs/concepts/asyncapi-document/structure#servers-field)
 use crate::spec::common::{ExternalDocumentation, RefOr, Tag};
 use crate::spec::security::SecurityScheme;
-use std::collections::HashMap;
+use crate::spec::Map;
 
-pub type Servers = HashMap<String, RefOr<Server>>;
+pub type Servers = Map<String, RefOr<Server>>;
 
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -30,7 +30,7 @@ pub struct Server {
     pub summary: Option<String>,
     /// A map between a variable name and its value. The value is used for substitution in the server's host and pathname template.
     #[serde(default)]
-    pub variables: HashMap<String, RefOr<Variable>>,
+    pub variables: Map<String, RefOr<Variable>>,
     /// A declaration of which security schemes can be used with this server. The list of values includes alternative security scheme objects that can be used. Only one of the security scheme objects need to be satisfied to authorize a connection or operation.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub security: Vec<RefOr<SecurityScheme>>,

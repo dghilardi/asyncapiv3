@@ -1,6 +1,6 @@
 //! Represents the AsyncAPI security property as well as the various security schemes supported in
 //! the specification.
-use std::collections::HashMap;
+use crate::spec::Map;
 
 /// You can describe how your server is secured with the security property where you define
 /// which security schemes can be used with the server in context. Each server in the
@@ -190,7 +190,7 @@ pub struct ImplicitOAuthFlow {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     refresh_url: Option<String>,
     /// The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it.
-    available_scopes: HashMap<String, String>,
+    available_scopes: Map<String, String>,
 }
 
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -202,7 +202,7 @@ pub struct PasswordOAuthFlow {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     refresh_url: Option<String>,
     /// The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it.
-    available_scopes: HashMap<String, String>,
+    available_scopes: Map<String, String>,
 }
 
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -214,7 +214,7 @@ pub struct ClientCredentialsOAuthFlow {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     refresh_url: Option<String>,
     /// The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it.
-    available_scopes: HashMap<String, String>,
+    available_scopes: Map<String, String>,
 }
 
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -228,7 +228,7 @@ pub struct AuthorizationCodeOAuthFlow {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     refresh_url: Option<String>,
     /// The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it.
-    available_scopes: HashMap<String, String>,
+    available_scopes: Map<String, String>,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
