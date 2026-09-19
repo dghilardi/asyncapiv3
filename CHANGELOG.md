@@ -7,7 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Add `Clone` derive to the `Error` enum
 - Add `preserve_order` feature backing spec maps with `IndexMap` to keep insertion order
+- Add rustdoc to the spec types and show feature gating on docs.rs
+- Add `Clone`, `Debug` and `PartialEq` derives to the spec types
+- Add WebSocket, NATS and HTTP bindings for server, channel, operation and message objects
+
+### Changed
+- Omit optional fields with no value when serializing, instead of emitting `null`
+- **Breaking**: rename the `builder_unstable` feature to `writer` and enable it by default
 
 ## [0.1.3] 2025-06-28
 ### Changed
