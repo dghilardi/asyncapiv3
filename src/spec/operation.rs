@@ -2,9 +2,9 @@
 //! field](https://www.asyncapi.com/docs/concepts/asyncapi-document/structure#operations-field)
 use crate::spec::common::{ExternalDocumentation, RefOr, ReferenceObject, Tag};
 use crate::spec::security::SecurityScheme;
-use std::collections::HashMap;
+use crate::spec::Map;
 
-pub type Operations = HashMap<String, RefOr<Operation>>;
+pub type Operations = Map<String, RefOr<Operation>>;
 
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]

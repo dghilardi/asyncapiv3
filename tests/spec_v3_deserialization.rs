@@ -28,3 +28,37 @@ fn deserialize_spec(entry: &Path) -> Result<AsyncApiSpec, Box<dyn std::error::Er
     })?;
     Ok(spec)
 }
+
+#[cfg(feature = "preserve_order")]
+#[test]
+fn preserve_order() {
+    fn assert_eq_with_preserved_order(a: &AsyncApiSpec, b: &AsyncApiSpec) {
+        assert_eq!(
+            serde_yaml::to_string(a).unwrap(),
+            serde_yaml::to_string(b).unwrap(),
+        );
+    }
+
+    let spec = deserialize_spec(Path::new(
+        "./test-res/3.0.0/kraken-websocket-request-reply-message-filter-in-reply-asyncapi.yml",
+    ))
+    .unwrap();
+
+    assert_eq_with_preserved_order(&spec, &spec);
+
+    // spec -> json string -> spec
+    let roundtrip = serde_json::from_str(&serde_json::to_string(&spec).unwrap()).unwrap();
+    assert_eq_with_preserved_order(&spec, &roundtrip);
+
+    // spec -> json value -> spec
+    let roundtrip = serde_json::from_value(serde_json::to_value(&spec).unwrap()).unwrap();
+    assert_eq_with_preserved_order(&spec, &roundtrip);
+
+    // spec -> yaml string -> spec
+    let roundtrip = serde_yaml::from_str(&serde_yaml::to_string(&spec).unwrap()).unwrap();
+    assert_eq_with_preserved_order(&spec, &roundtrip);
+
+    // spec -> yaml value -> spec
+    let roundtrip = serde_yaml::from_value(serde_yaml::to_value(&spec).unwrap()).unwrap();
+    assert_eq_with_preserved_order(&spec, &roundtrip);
+}

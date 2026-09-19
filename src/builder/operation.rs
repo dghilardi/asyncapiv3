@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 use schemars::Schema;
 
 use crate::error::Error;
@@ -7,12 +5,13 @@ use crate::spec::channel::Channel;
 use crate::spec::common::{Either, RefOr, ReferenceObject};
 use crate::spec::message::Message;
 use crate::spec::operation::{Operation, OperationAction, OperationReply, OperationReplyAddress};
+use crate::spec::Map;
 
 use super::AsyncApiV3Builder;
 
 pub struct MessageFullSpec {
     pub message: Message,
-    pub definitions: HashMap<String, Schema>,
+    pub definitions: Map<String, Schema>,
 }
 
 pub struct OperationInfo {
@@ -131,7 +130,7 @@ impl AsyncApiV3Builder {
             .insert(String::from(res_name), RefOr::Right(message));
         Ok(())
     }
-    fn merge_schema_components(&mut self, partial: HashMap<String, Schema>) -> Result<(), Error> {
+    fn merge_schema_components(&mut self, partial: Map<String, Schema>) -> Result<(), Error> {
         for (key, schema) in partial {
             self.insert_schema_component(key, schema)?;
         }

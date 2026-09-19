@@ -1,9 +1,9 @@
 //! Contains types related to the [channels field](https://www.asyncapi.com/docs/concepts/asyncapi-document/structure#channels-field).
 use crate::spec::common::{ExternalDocumentation, RefOr, ReferenceObject, Tag};
 use crate::spec::message::Messages;
-use std::collections::HashMap;
+use crate::spec::Map;
 
-pub type Channels = HashMap<String, RefOr<Channel>>;
+pub type Channels = Map<String, RefOr<Channel>>;
 
 /// A channel represents the communication pathways through which messages are exchanged. You can
 /// specify their purpose, address, and the expected message formats for communication.
@@ -41,7 +41,7 @@ pub struct Channel {
     pub bindings: Option<RefOr<ChannelBindings>>,
 }
 
-pub type Parameters = HashMap<String, RefOr<Parameter>>;
+pub type Parameters = Map<String, RefOr<Parameter>>;
 
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]

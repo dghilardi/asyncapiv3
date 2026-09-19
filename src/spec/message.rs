@@ -2,10 +2,10 @@
 //! object](https://www.asyncapi.com/docs/reference/specification/v3.0.0#messageObject) and related
 //! types.
 use crate::spec::common::{Either, ExternalDocumentation, RefOr, Tag};
+use crate::spec::Map;
 use core::num::NonZeroU16;
-use std::collections::HashMap;
 
-pub type Messages = HashMap<String, RefOr<Message>>;
+pub type Messages = Map<String, RefOr<Message>>;
 
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -123,11 +123,11 @@ impl HttpMessageBinding {
 /// Message Example Object represents an example of a Message Object and MUST contain either headers and/or payload fields.
 pub struct MessageExample {
     /// The value of this field MUST validate against the Message Object's headers field.
-    #[serde(default, skip_serializing_if = "HashMap::is_empty")]
-    pub headers: HashMap<String, serde_json::Value>,
+    #[serde(default, skip_serializing_if = "Map::is_empty")]
+    pub headers: Map<String, serde_json::Value>,
     /// The value of this field MUST validate against the Message Object's payload field.
-    #[serde(default, skip_serializing_if = "HashMap::is_empty")]
-    pub payload: HashMap<String, serde_json::Value>,
+    #[serde(default, skip_serializing_if = "Map::is_empty")]
+    pub payload: Map<String, serde_json::Value>,
     /// A machine-friendly name.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,

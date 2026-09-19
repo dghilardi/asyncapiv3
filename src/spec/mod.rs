@@ -14,6 +14,14 @@ pub mod operation;
 pub mod security;
 pub mod server;
 
+/// Map type used throughout the specification. Defaults to [`std::collections::HashMap`], or to
+/// [`indexmap::IndexMap`] when the `preserve_order` feature is enabled, in which case insertion
+/// order is preserved on (de)serialization.
+#[cfg(not(feature = "preserve_order"))]
+pub type Map<K, V> = std::collections::HashMap<K, V>;
+#[cfg(feature = "preserve_order")]
+pub type Map<K, V> = indexmap::IndexMap<K, V>;
+
 /// Enum to store a versioned instance of the specification.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(tag = "asyncapi")]
